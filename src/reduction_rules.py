@@ -3,31 +3,36 @@ import networkx as nx
 
 def high_degree_rule(G: nx.Graph, k: int) -> int:
     """
-    Applies high degree reduction rule: if vertex v has degree > k,
-    it must be in any k-vertex cover, so remove it and decrement k.
+    Applique la règle de réduction des sommets de haut degré :
+    - Si un sommet v a un degré strictement supérieur à k, il doit obligatoirement
+      appartenir à toute couverture de sommets de taille k.
+    - Il est donc supprimé du graphe et k est décrémenté.
 
-    Parameters
+    Paramètres
     ----------
     G : nx.Graph
-        Input graph (modified in place)
+        Graphe d'entrée (modifié en place).
     k : int
-        Current parameter value
+        Valeur actuelle du paramètre k (taille maximale du vertex cover).
 
-    Returns
-    -------
+    Retourne
+    --------
     new_k : int
-        Updated parameter value after reductions
+        Nouvelle valeur de k après l'application des réductions.
     """
-    degs = dict(G.degree())
-    changed = True
+    degs = dict(G.degree())  # Dictionnaire des degrés des sommets
+    changed = True  # Indicateur pour suivre les modifications
+
     while changed:
         changed = False
         for v in list(G.nodes()):
-            if degs[v] > k:
-                G.remove_node(v)
-                k -= 1
+            if degs[v] > k:  # Si un sommet a un degré > k, il doit être dans le vertex cover
+                G.remove_node(v)  # Suppression du sommet
+                k -= 1  # Ajustement du paramètre k
                 changed = True
-                break
+                break  # Redémarrer l'itération après modification
+
         if changed:
-            degs = dict(G.degree())
+            degs = dict(G.degree())  # Mise à jour des degrés après suppression
+
     return k

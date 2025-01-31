@@ -1,4 +1,4 @@
 """
-Vertex Cover kernelization via Crown Decomposition
-Implementation based on Cygan et al. "Parameterized Algorithms"
+Kerénalisation de Vertex Cover via la décomposition de la couronne
+Implémentation basée sur Cygan et al. "Algorithmes paramétrés"
 """

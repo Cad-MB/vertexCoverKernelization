@@ -1,1 +1,1 @@
-"""Unit tests for Crown Decomposition k-Vertex Cover implementation."""
+"""Tests unitaires pour l'implémentation de Crown Decomposition k-Vertex Cover."""

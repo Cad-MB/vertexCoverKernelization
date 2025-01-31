@@ -20,23 +20,23 @@ def benchmark_instance(G, k, edge_density):
 
     # Kernel + VCB
     start = time.time()
-    ker_G, ker_k, no_inst = kernel_vertex_cover_crown(G, k)
+    ker_g, ker_k, no_inst = kernel_vertex_cover_crown(G, k)
     ker_time = time.time() - start
 
-    if not no_inst and ker_G:
+    if not no_inst and ker_g:
         vcb_start = time.time()
-        vcb_ker_result = vcb_recursive(ker_G, ker_k)
+        vcb_ker_result = vcb_recursive(ker_g, ker_k)
         ker_vcb_time = time.time() - vcb_start
 
         results.update({
-            "kernel_size": ker_G.number_of_nodes(),
-            "kernel_edges": ker_G.number_of_edges(),
-            "kernel_density": ker_G.number_of_edges() / (ker_G.number_of_nodes() * (ker_G.number_of_nodes() - 1) / 2),
+            "kernel_size": ker_g.number_of_nodes(),
+            "kernel_edges": ker_g.number_of_edges(),
+            "kernel_density": ker_g.number_of_edges() / (ker_g.number_of_nodes() * (ker_g.number_of_nodes() - 1) / 2),
             "kernel_time": ker_time,
             "kernel_vcb_time": ker_vcb_time,
             "total_ker_time": ker_time + ker_vcb_time,
-            "reduction_ratio": 1 - (ker_G.number_of_nodes() / G.number_of_nodes()),
-            "edge_reduction_ratio": 1 - (ker_G.number_of_edges() / G.number_of_edges()),
+            "reduction_ratio": 1 - (ker_g.number_of_nodes() / G.number_of_nodes()),
+            "edge_reduction_ratio": 1 - (ker_g.number_of_edges() / G.number_of_edges()),
             "kernel_success": vcb_ker_result
         })
     else:
@@ -66,8 +66,10 @@ def benchmark_instance(G, k, edge_density):
     return results
 
 
-def run_comprehensive_benchmarks(test_configs, edge_probs=[0.1, 0.3, 0.5], samples=5):
+def run_comprehensive_benchmarks(test_configs, edge_probs=None, samples=5):
     """Exécute une série complète de tests."""
+    if edge_probs is None:
+        edge_probs = [0.1, 0.3, 0.5]
     all_results = []
     total_tests = len(test_configs) * len(edge_probs) * samples * 2  # *2 pour random et guaranteed
     current = 0
@@ -83,14 +85,14 @@ def run_comprehensive_benchmarks(test_configs, edge_probs=[0.1, 0.3, 0.5], sampl
                 print(f"Sample {i + 1}/{samples} (Progress: {current}/{total_tests})")
 
                 # Test standard
-                G = generate_vertex_cover_graph(n, k, edge_prob)
-                results = benchmark_instance(G, k, edge_prob)
+                g = generate_vertex_cover_graph(n, k, edge_prob)
+                results = benchmark_instance(g, k, edge_prob)
                 results.update({"type": "random"})
                 all_results.append(results)
 
                 # Test avec VC garanti
-                G = generate_vertex_cover_graph(n, k, edge_prob, guaranteed_vc=True)
-                results = benchmark_instance(G, k, edge_prob)
+                g = generate_vertex_cover_graph(n, k, edge_prob, guaranteed_vc=True)
+                results = benchmark_instance(g, k, edge_prob)
                 results.update({"type": "guaranteed_vc"})
                 all_results.append(results)
 
