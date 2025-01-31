@@ -1,0 +1,26 @@
+
+Bonjour à tous,
+
+je répond par ce message à la question qui m'a été posée sur la décomposition en couronne.
+
+Le principe général est le suivant:
+
+on enlève les sommets isolés
+
+si le nombre de sommets de G  est >3k, on cherche un couplage M dans G par un algorithme glouton.
+
+Si M  a >k arêtes réponse négative
+
+Sinon, on constitue le graphe biparti extrait de G entre les sommets V_M supports du couplage M et les autres (notés I).
+
+On utilise l'algo de Hopcroft et Karp pour trouver un couplage max M' de ce graphe biparti. A noter que dans networkx la fonction to_vertex_cover permet de calculer le vertex cover de ce graphe biparti X à partir de M'
+
+si M' a >k arêtes, réponse négative.
+
+Sinon, on construit la décomposition en couronne (C,H,R) selon la démarche du lemme de la couronne (cf livre de Cygan et al page 28).  Et l'on recommence avec le graphe R et le paramètre k-|H|.
+
+Jusqu'à ce qu'on n'ait <=3k sommets.
+
+cordialement
+
+Claire Hanen

@@ -1,0 +1,9 @@
+Bonjour à tous,,
+
+Danael évoquait hier le fait qu'il se retrouve avec des k négatifs. Je pense que dans les cas de base, puisque l'on branche sur un sommet x de degré au moins 3 dans la version améliorée (qui est présentée dans le livre de cygan page 53) on regarde pour un k positif, si x est dans l'ensemble couvrant ou si c'est l'ensemble des voisins de x. Par conséquent si jamais k est inférieur au nombre de voisins du sommet seul le cas où x est dans l'ensemble couvrant doit être abordé (dans l'autre cas la réponse est négative).
+
+j'espère que cela répond à la question. n'hésitez pas à revenir vers moi sinon.
+
+cordialement
+
+claire Hanen
